@@ -1,1 +1,10 @@
+title: Maggi
+image: maggi.jpg
+desc: Delicious, fast and simple recipe
+size: 2-3 servings
+time: 1 hour
+source: https://www.youtube.com/watch?v=T9uI1-6Ac6A
+---
 just boil it in water for 2 mins with the masala packet given inside the main packet.
+###
+then serve it with some sauce, you can also add seasoning of chat masala.
