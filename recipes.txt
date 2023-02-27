@@ -17,4 +17,3 @@ p: Simple Tasty Poha
 title: Upma
 image: upma.jpg
 p: Healthy Upma
----
