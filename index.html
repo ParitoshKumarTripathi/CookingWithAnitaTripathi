@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Recipe Website</title>
+	<link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lora&display=swap" rel="stylesheet">
+	<link href="style.css" rel="stylesheet">
+</head>
+<body>
+	<header>
+		<img src="path/to/logo.png" class="logo" alt="Website Logo">
+		<h1>Recipe Website</h1>
+		<p>Find your favorite recipes and start cooking today!</p>
+		<input type="text" id="search-box" class="search-box" placeholder="Search recipes...">
+		<nav>
+			<a href="#">English</a>
+			<a href="#">हिन्दी</a>
+		</nav>
+	</header>
+
+	<div class="grid">
+	</div>
+
+<script>
+const url = 'https://raw.githubusercontent.com/ParitoshKumarTripathi/CookingWithAnitaTripathi/main/recipes.txt'
+fetch(url)
+	.then(response => response.text())
+	.then(data => {
+		const recipeStrings = data.split("---");
+
+		// Parse each recipe string into an object
+		const recipes = recipeStrings.map(recipeString => {
+			const recipeLines = recipeString.trim().split("\n");
+
+			const recipe = {};
+
+			recipeLines.forEach(line => {
+
+				const [key, value] = line.split(": ");
+				recipe[key.toLowerCase()] = value;
+			});
+
+			return recipe;
+		});
+
+		const grid = document.querySelector(".grid");
+		recipes.forEach(recipe => {
+			const html = `
+				<div class="grid-item" onclick="location.href='recipe.html#${recipe.title.trimEnd().toLowerCase()}';">
+					<img src="images/${recipe.image.trimEnd()}" alt="${recipe.title.trimEnd()}">
+					<p>${recipe.p}</p>
+				</div>`;
+
+			const div = document.createElement("div");
+			div.innerHTML = html.trim();
+			grid.appendChild(div.firstChild);
+
+			attachSearchBoxListener();
+		});
+	});
+
+	function attachSearchBoxListener() {
+		const searchBox = document.getElementById('search-box');
+		const gridItems = document.querySelectorAll('.grid-item');
+
+		searchBox.addEventListener('input', () => {
+			const searchTerm = searchBox.value.toLowerCase();
+
+			gridItems.forEach((item) => {
+				const text = item.querySelector('p').textContent.toLowerCase();
+				const name = item.querySelector('img').getAttribute('alt').toLowerCase();
+
+        // Check if the search term matches the text content or alt attribute
+        const matchesSearch = text.includes(searchTerm) || name.includes(searchTerm);
+
+				if (matchesSearch) {
+					item.style.display = '';
+				} else {
+					item.style.display = 'none';
+				}
+			});
+		});
+		}
+	</script>
+
+	<footer>
+	  <p>&copy; 2023 Recipe Website. All rights reserved.</p>
+	</footer>
+
+	</body>
+	</html>
